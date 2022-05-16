@@ -1,0 +1,9 @@
+POST http://localhost:5000/insert
+Content-Type: application/json
+
+{
+    "name": "Nikhil",
+    "age": "24",
+    "gender": "Male",
+    "sport": "football, cricket"
+}

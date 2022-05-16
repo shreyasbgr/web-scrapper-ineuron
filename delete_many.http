@@ -1,0 +1,6 @@
+POST http://localhost:5000/delete-many
+Content-Type: application/json
+
+{
+    "name": "Nikhil"
+}

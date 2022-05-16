@@ -1,0 +1,10 @@
+2022-05-02 14:28:33,141 - 	INFO - mongo_util.py - connection - 14 - Connecting to the MongoDB...
+2022-05-02 14:28:41,332 - 	INFO - mongo_util.py - connection - 21 - Connection to the MongoDB successful
+2022-05-02 14:28:44,868 - 	INFO - mongo_util.py - connection - 14 - Connecting to the MongoDB...
+2022-05-02 14:28:52,983 - 	INFO - mongo_util.py - connection - 21 - Connection to the MongoDB successful
+2022-05-02 14:29:16,285 - 	INFO - mongo_util.py - insert_one_record - 100 - Inserting one record into MongoDB
+2022-05-02 14:29:16,544 - 	INFO - mongo_util.py - insert_one_record - 102 - Inserted ids are:
+2022-05-02 14:29:16,544 - 	INFO - mongo_util.py - insert_one_record - 103 - 1. 626f9d64400c10a81246279b
+2022-05-02 14:29:16,544 - 	INFO - mongo_util.py - insert_one_record - 108 - Insertion of one record into MongoDB successful
+2022-05-02 14:30:28,588 - 	INFO - mongo_util.py - delete_many_records - 63 - Deleting many records from the MongoDB collection
+2022-05-02 14:30:28,628 - 	INFO - mongo_util.py - delete_many_records - 73 - Deletion of many records from the MongoDB collection successful
