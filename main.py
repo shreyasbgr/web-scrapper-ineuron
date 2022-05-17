@@ -28,6 +28,7 @@ def testing_web_scrapper_code_ineuron():
     with open('testfile','w') as f:
         f.write(ineuron_html.get_text())
 
+
 def testing_selenium_code():
     driver= webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     driver.get("https://courses.ineuron.ai/")
@@ -43,25 +44,31 @@ def testing_selenium_code():
                 break
             last_height = new_height
     infinite_scroll(driver)
+
     ineuronPage = driver.page_source
     ineuron_html = bs(ineuronPage, "html.parser")
-    titles_found = ineuron_html.findAll(class_="Course_course-title__2rA2S")
-    prices_found = ineuron_html.findAll(class_="Course_course-price__3-3_U")
-    desc_found = ineuron_html.findAll(class_="Course_course-desc__2G4h9")
-    count=0
+    courses_found = ineuron_html.findAll(class_="Course_course-card__1_V8S Course_card__2uWBu card")
     titles = []
-    prices = []
     descriptions = []
-    for title,price,description in zip(titles_found,prices_found,desc_found):
-        count+=1
-        titles.append(title.text)
-        prices.append(price.text)
-        descriptions.append(description.text)
+    instructors = []
+    prices = []
+    for course in courses_found:
+        title = course.find(class_="Course_course-title__2rA2S")
+        description = course.find(class_="Course_course-desc__2G4h9")
+        instructor = course.find(class_="Course_course-instructor__1bsVq")
+        price = course.find(class_="Course_course-price__3-3_U")
+        titles.append(title.text if title else '')
+        descriptions.append(description.text if description else '')
+        instructors.append(instructor.text if instructor else '')
+        prices.append(price.text if price else '')
+
     print(titles)
     print(prices)
-    print(len(prices_found))
+    print(instructors)
     print(len(titles))
     print(len(descriptions))
+    print(len(instructors))
+    print(len(prices))
 #testing_web_scrapper_code()
 #testing_web_scrapper_code_ineuron()
 testing_selenium_code()
