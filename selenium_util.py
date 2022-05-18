@@ -7,7 +7,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 class selenium_util:
     def __init__(self):
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-    
+
     def get_driver(self):
         return self.driver
     

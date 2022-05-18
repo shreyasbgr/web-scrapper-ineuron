@@ -1,8 +1,10 @@
 # Import beautifoul soup
+from email.mime import image
 from bs4 import BeautifulSoup as bs
 from mongo_util import mongodb_util
 from selenium_util import selenium_util
-
+import requests
+import gridfs
 def initialize_mongo_db():
     global my_mongo_util_obj
 
@@ -29,30 +31,21 @@ def web_scraping_code():
         description = course.find(class_="Course_course-desc__2G4h9")
         instructor = course.find(class_="Course_course-instructor__1bsVq")
         price = course.find(class_="Course_course-price__3-3_U")
+        image_container = course.find(class_="Course_left-area__QeYpw")
         record = {
             "title": title.text if title else '',
+            "image_url": image_container.img['src'] if image_container.img['src'] else '',
             "description": description.text if description else '',
             "instructor": instructor.text if instructor else '',
             "price": price.text if price else ''
         }
         my_mongo_util_obj.insert_one_record(record)
-        selenium_obj.driver.close()
-
-def fetch_images():
-    selenium_obj.driver.get("https://courses.ineuron.ai/")
-    selenium_obj.driver.page_source
-    ineuronPage = selenium_obj.driver.page_source
-    ineuron_html = bs(ineuronPage, "html.parser")
-
-    images_found = ineuron_html.findAll(class_="Course_left-area__QeYpw")
-    for image_container in images_found:
-        image_source = image_container.img['src']
-        print(image_source)
     selenium_obj.driver.close()
+
 
 if __name__ == '__main__':
     initialize_mongo_db()
     initialize_selenium_obj()
-    #my_mongo_util_obj.delete_all_records()
-    #web_scraping_code()
-    fetch_images()
+    my_mongo_util_obj.delete_all_records()
+    web_scraping_code()
+    #fetch_images()
