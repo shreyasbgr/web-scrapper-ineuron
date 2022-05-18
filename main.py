@@ -12,9 +12,12 @@ def initialize_mongo_db():
     logfile = 'output.log'
     my_mongo_util_obj = mongodb_util(connection_url,db_name,col_name,logfile)
 
+def initialize_selenium_obj():
+    global selenium_obj
+    selenium_obj = selenium_util()
+
 # Function to web scrape all the courses from https://courses.ineuron.ai/ and store it in mongodb
 def web_scraping_code():
-    selenium_obj = selenium_util()
     selenium_obj.driver.get("https://courses.ineuron.ai/")
     selenium_obj.infinite_scroll()
 
@@ -33,8 +36,23 @@ def web_scraping_code():
             "price": price.text if price else ''
         }
         my_mongo_util_obj.insert_one_record(record)
+        selenium_obj.driver.close()
+
+def fetch_images():
+    selenium_obj.driver.get("https://courses.ineuron.ai/")
+    selenium_obj.driver.page_source
+    ineuronPage = selenium_obj.driver.page_source
+    ineuron_html = bs(ineuronPage, "html.parser")
+
+    images_found = ineuron_html.findAll(class_="Course_left-area__QeYpw")
+    for image_container in images_found:
+        image_source = image_container.img['src']
+        print(image_source)
+    selenium_obj.driver.close()
 
 if __name__ == '__main__':
     initialize_mongo_db()
-    my_mongo_util_obj.delete_all_records()
-    web_scraping_code()
+    initialize_selenium_obj()
+    #my_mongo_util_obj.delete_all_records()
+    #web_scraping_code()
+    fetch_images()
